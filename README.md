@@ -17,7 +17,7 @@ In order to defend against poisoning attacks, FLGMM targets to directly remove c
 
 The workflow of FLGMM is illustrated in the figure. Specifically, due to the distinct difference between the distance distributions of benign and malicious clients, FLGMM employs the Gaussian Mixture Model (GMM) during the initial rounds of communication to approximate the behavior of participating clients. This probabilistic model is instrumental in identifying anomalous behavior by estimating the typical data distribution of benign clients. Based on this estimation, FLGMM defines a normal distance region, which sets the boundaries for expected client behavior under normal operating conditions.
 
-<img src= https://github.com/user-attachments/assets/0b622e21-767f-4c8a-abf9-a7f38003c20f width="800px">
+<img src= https://github.com/user-attachments/assets/0b622e21-767f-4c8a-abf9-a7f38003c20f width="500px">
 
 After the normal distance region has been established, FLGMM transitions into a monitoring phase. In this phase, the previously defined normal distance region becomes critical, serving as the basis for setting thresholds for all client distances, similar to the control chart method. This allows FLGMM to promptly flag any subsequent deviations from the norm. The control chart, traditionally used for monitoring manufacturing processes, is adapted here to oversee the activity of clients within the FL system. Anomalies are signaled when client data points fall outside the control limit, indicating potential adversarial behavior or data corruption. Thus, FLGMM is an effective defense against poisoning attacks in FL when adversaries are less than benign clients.
 
