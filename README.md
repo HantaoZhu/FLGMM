@@ -22,9 +22,16 @@ The workflow of FLGMM is illustrated in the figure. Specifically, due to the dis
 After the normal distance region has been established, FLGMM transitions into a monitoring phase. In this phase, the previously defined normal distance region becomes critical, serving as the basis for setting thresholds for all client distances, similar to the control chart method. This allows FLGMM to promptly flag any subsequent deviations from the norm. The control chart, traditionally used for monitoring manufacturing processes, is adapted here to oversee the activity of clients within the FL system. Anomalies are signaled when client data points fall outside the control limit, indicating potential adversarial behavior or data corruption. Thus, FLGMM is an effective defense against poisoning attacks in FL when adversaries are less than benign clients.
 
 ## **Implementation**
-*flgmm.py: Contains the main implementation of our defense mechanism.
-*models: Contains NN models, local update function, test function, Fedavg and so on.
-*utils: Cotains defense algorithms like FedCPA and Cosper, data utils, sample function and so on. 
+* flgmm.py: Contains the main implementation of our defense mechanism.
+* models: Contains NN models, local update function, test function, Fedavg and so on.
+* utils: Cotains defense algorithms like FedCPA and Cosper, data utils, sample function and so on. 
+
+## **Depdendencies (tentative)**
+* python 3.12.3 (Anaconda)
+* Pytorch 2.2.2
+* torchvision 0.17.2 
+* CUDA 12.5
+* cuDNN 9.1.1.17 
 
 ## **Sample command**
 Use command below for experiment: Run FLGMM with hyperparameters L=3 and T_g=50 (ccepochs), in label-flipping (lf) attack with 0.2 attack ratios on MNIST dataset.
