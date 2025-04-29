@@ -203,7 +203,7 @@ if __name__ == '__main__':
     r = []
     p = []
     o = 1
-    f = []
+    f1 = []
     ratio = []
     seduce = []
 
@@ -403,11 +403,11 @@ if __name__ == '__main__':
                 p.append(calculate_accuracy(excluded_clients, noisy_clients)[1])
                 recall = calculate_accuracy(excluded_clients, noisy_clients)[0]
                 pre = calculate_accuracy(excluded_clients, noisy_clients)[1]
-                f1 = 2 * recall * pre / (recall + pre)
-                f.append(f1)
+                f = 2 * recall * pre / (recall + pre)
+                f1.append(f)
                 print("Initial recall:", r[0])
                 print("Initial precision:", p[0])
-                print("Initial f1score:", f[0])
+                print("Initial f1score:", f1[0])
 
             if iters > args.ccepochs:
                 for idx, client_distances in enumerate(distances_matrix):
@@ -421,11 +421,11 @@ if __name__ == '__main__':
                 p.append(calculate_accuracy(excluded_clients, noisy_this_round)[1])
                 recall = calculate_accuracy(excluded_clients, noisy_clients)[0]
                 pre = calculate_accuracy(excluded_clients, noisy_clients)[1]
-                f1 = 2 * recall * pre / (recall + pre)
-                f.append(f1)
+                f = 2 * recall * pre / (recall + pre)
+                f1.append(f)
                 print("Recall:", r[o])
                 print("Precision:", p[o])
-                print("f1score:", f[o])
+                print("f1score:", f1[o])
                 o += 1
 
             # Update global model
@@ -616,7 +616,7 @@ if __name__ == '__main__':
             f.write("%s\n" % item)
 
     with open(os.path.join(save_dir, 'F1score.txt'), 'w') as f:
-        for item in f:
+        for item in f1:
             f.write("%s\n" % item)
 
     plt.figure()
