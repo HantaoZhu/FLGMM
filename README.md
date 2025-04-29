@@ -33,7 +33,20 @@ After the normal distance region has been established, FLGMM transitions into a 
 * CUDA 12.5
 * cuDNN 9.1.1.17 
 
-## **Sample command**
+## **Running Experients**
+
+| Key argument   | Description  |
+| : ---- :  |: ----  |
+| dataset  | Dataset to use |
+| model  | Model to use |
+| attack_pattern | The attack type: lf -> label-flipping, gn -> sample-poisoning, wn -> Gaussian-noise, rw -> random-weights|
+| method | The defense algorithm to use |
+| peer_round | The attacker ratio |
+| epochs | The number of FL round |
+| ccepochs | The T_g round for GMM |
+| L | The width (L sigma) of the control limit |
+
+### **Sample command**
 Use command below for experiment: Run FLGMM with hyperparameters L=3 and T_g=50 (ccepochs), in label-flipping (lf) attack with 0.2 attack ratios on MNIST dataset.
 
 ```
