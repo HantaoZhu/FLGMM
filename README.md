@@ -36,7 +36,7 @@ After the normal distance region has been established, FLGMM transitions into a 
 ## **Running Experients**
 
 | Key argument   | Description  |
-| : ---- :  |: ----  |
+| :----:  |:----  |
 | dataset  | Dataset to use |
 | model  | Model to use |
 | attack_pattern | The attack type: lf -> label-flipping, gn -> sample-poisoning, wn -> Gaussian-noise, rw -> random-weights|
