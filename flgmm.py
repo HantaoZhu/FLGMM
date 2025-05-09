@@ -19,10 +19,10 @@ import random
 from torchvision import datasets, transforms
 import torch
 import seaborn as sns
-from utils.sampling import mnist_iid, cifar_iid, fmnist_iid, add_noise_to_client_2, add_gaussian_noise
+from utils.sampling import mnist_iid, cifar_iid, fmnist_iid, add_noise_to_client_2, add_gaussian_noise, add_gaussian_char_noise, add_noise_to_client_sk
 from utils.options import args_parser
 from models.Update import LocalUpdate
-from models.Nets import MLP, CNNMnist, CNNCifar, FashionMNISTCNN
+from models.Nets import MLP, CNNMnist, CNNCifar, FashionMNISTCNN, CharLSTM
 from models.Fed import FedAvg_0
 from models.test import test_img
 from sklearn.mixture import GaussianMixture
@@ -156,6 +156,20 @@ if __name__ == '__main__':
         ]))
         dict_users = FashionMnist_iid(dataset_train, args.num_users)
 
+    elif args.dataset == 'shakespeare':
+        dataset_train = ShakeSpeare(train=True)
+        dataset_test = ShakeSpeare(train=False)
+        dict_users = dataset_train.get_client_dic()
+        selected_users = list(dict_users.keys())[:args.num_users]
+        dict_users = {user: dict_users[user] for user in selected_users}
+        test_indices = list(range(len(dataset_test.data)))[:len(dataset_train.data)] 
+        test_loader = DataLoader(
+            DatasetSplit(dataset_test, test_indices[:sum(len(dict_users[i]) for i in selected_users)]),
+            batch_size=args.bs, shuffle=False)
+        print(f"Selected {args.num_users} users from Shakespeare dataset")
+        print(f"Training data size: {sum(len(dict_users[i]) for i in selected_users)}")
+        print(f"Test data size: {len(test_indices[:sum(len(dict_users[i]) for i in selected_users)])}")
+
     # Initialize nn models
     if args.model == 'cnn' and args.dataset == 'mnist':
         net_glob = CNNMnist(args=args).to(args.device)
@@ -163,6 +177,8 @@ if __name__ == '__main__':
         net_glob = CNNCifar(args=args).to(args.device)
     elif args.dataset == 'fmnist' and args.model == 'cnn':
         net_glob = FashionMNISTCNN(args=args).to(args.device)
+    elif args.dataset == 'shakespeare' and args.model == 'lstm':
+        net_glob = CharLSTM().to(args.device)
     elif args.model == 'mlp':
         from models.Nets import MLP
 
@@ -235,7 +251,12 @@ if __name__ == '__main__':
             if args.attack_pattern == 'lf' and np.random.rand() < args.attack_pos:
                 if idx in noisy_clients:
                     fakedata = copy.deepcopy(dataset_train)
-                    add_noise_to_client_2(fakedata,dict_users,idx)
+
+                    if args.dataset == 'shakespeare':
+                            add_noise_to_client_sk(fakedata, dict_users, idx)
+                    else:
+                        add_noise_to_client_2(fakedata,dict_users,idx)
+                    
                     local = LocalUpdate(args=args, dataset=fakedata, idxs=dict_users[idx])
                     w, loss, grad = local.train(net=copy.deepcopy(net_glob).to(args.device))
                     local_model = copy.deepcopy(net_glob).to(args.device)
@@ -258,7 +279,12 @@ if __name__ == '__main__':
 
             if args.attack_pattern == 'gn' and np.random.rand() < args.attack_pos:
                 if idx in noisy_clients:
-                    dataset_train_2 = add_gaussian_noise(dataset_train,dict_users,idx)
+
+                    if args.dataset =='shakespeare':
+                            dataset_train_2 = add_gaussian_char_noise(dataset_train,dict_users,idx)
+                    else:
+                        dataset_train_2 = add_gaussian_noise(dataset_train,dict_users,idx)
+                        
                     local = LocalUpdate(args=args, dataset=dataset_train_2, idxs=dict_users[idx])
                     w, loss, grad= local.train(net=copy.deepcopy(net_glob).to(args.device))
                     local_model = copy.deepcopy(net_glob).to(args.device)
