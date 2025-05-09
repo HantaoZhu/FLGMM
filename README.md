@@ -1,4 +1,4 @@
-**Statistical Test-based Adversarial Client Detection in Federated Learning under Poisoning Attacks**
+# **Statistical Test-based Adversarial Client Detection in Federated Learning under Poisoning Attacks**
 
 This repository contains the technical implementation of the paper Statistical Test-based Adversarial Client Detection in Federated Learning under Poisoning Attacks, as well as proof of its results.
 
@@ -54,7 +54,7 @@ python flgmm.py --dataset mnist --iid --attack_pattern lf --method flgmm --peer_
 ```
 
 ## **Sample Results**
-<img width="652" alt="sample results" src="https://github.com/user-attachments/assets/7fef059f-58fd-4efe-ab15-df60689b6306" /># 
+<img width="652" alt="sample results" src="https://github.com/user-attachments/assets/7fef059f-58fd-4efe-ab15-df60689b6306" />
 
 ## **Conclusion**
 In this paper, we have presented FLGMM, a robust defense mechanism for federated learning to leverage outlier detection methods based on the statistical process control theory to detect and exclude adversarial clients. Our approach utilizes the variant of the control chart to monitor and identify anomalies in the training process, ensuring that only updates from benign clients are aggregated to the global model. We evaluated FLGMM across various datasets and under different attack scenarios, including label-flipping, sample-poisoning, Gaussian-noise, and random-weights attacks. Extensive results demonstrate that FLGMM significantly enhances the detection accuracy of adversarial clients and improves the overall accuracy of the global model.
