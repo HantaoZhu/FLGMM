@@ -17,7 +17,7 @@ In order to defend against poisoning attacks, FLGMM targets to directly eliminat
 
 The workflow of FLGMM is illustrated in the figure. Specifically, FLGMM employs the GMM during the initial rounds of communication to capture the distinct statistical differences in the distance distributions of benign and adversarial clients. This probabilistic model is instrumental in identifying anomalous behavior by estimating the typical distance distribution of benign clients. Based on the estimated benign distribution, FLGMM establishes a normal distance region, which defines the expected range of variation for benign client updates under normal conditions.
 
-<img src= https://github.com/user-attachments/assets/0b622e21-767f-4c8a-abf9-a7f38003c20f width="500px">
+<img src= https://github.com/HantaoZhu/FLGMM/blob/main/Figure/flowchart_complete.png width="500px">
 
 Once the normal distance region is established, FLGMM transitions into a monitoring phase, where it continuously evaluates client updates using this region to set the control limit. Clients whose distances fall outside the bound are flagged as adversaries. The adaptation of control chart methods enables prompt detection of anomalies, ensuring that adversarial updates or corrupted local data do not influence the global model. Consequently, FLGMM provides an effective and statistically grounded defense against poisoning attacks.
 
